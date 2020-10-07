@@ -22,6 +22,7 @@ public class TicTacToeProblem {
         return board;
     }
 
+
     //Method to Choose Letter To Input
     public static char chooseLetter(char letter) {
 
@@ -97,17 +98,21 @@ public class TicTacToeProblem {
         if (winMove != 0) return winMove;
         int userWinMove = getWinningMove(board, userletter);
         if (userWinMove != 0) return userWinMove;
-        int[] cornerMoves={1,3,7,9};
-        int cornerMove= getRandomMove(board,cornerMoves);
-        if(cornerMove!=0) return cornerMove;
+        int[] cornerMoves = {1, 3, 7, 9};
+        int cornerMove = getRandomMove(board, cornerMoves);
+        if (cornerMove != 0) return cornerMove;
+        if (isCellFree(board, 5)) return 5;
+        int[] remainingMoves = {2, 4, 6, 8};
+        int remainingMove = getRandomMove(board, remainingMoves);
+        if (remainingMove != 0) return remainingMove;
+
         return 0;
     }
-//method of getting random move in case no one's winning
-    public static int getRandomMove(char[] board, int[] moves)
-    {
-        for(int index=1;index<board.length;index++)
-        {
-            if(isCellFree(board,moves[index]))
+
+    //method of getting random move in case no one's winning
+    public static int getRandomMove(char[] board, int[] moves) {
+        for (int index = 1; index < board.length; index++) {
+            if (isCellFree(board, moves[index]))
                 return moves[index];
         }
         return 0;

@@ -7,13 +7,18 @@ public class TicTacToeProblem {
 
     public static Scanner userinput = new Scanner(System.in);
 
+    public enum Player {USER, COMPUTER}
+
+    ;
+    public static final int HEAD = 1;
+
     //Method to Create Board
     public static char[] createBoard() {
         char[] board = new char[10];
         for (int position = 1; position < board.length; position++) {
             board[position] = ' ';
         }
-      //  board[2] = 'X';
+
         return board;
     }
 
@@ -43,25 +48,32 @@ public class TicTacToeProblem {
         while (true) {
             System.out.println("Enter your preferred index: ");
             int index = userinput.nextInt();
-            if (availablecells.contains(index) && board[index] == ' ')
+            if (availablecells.contains(index) && isCellFree(board, index))
                 return index;
         }
     }
 
-//    //Method to check whether cell is free or not
+    //    //Method to check whether cell is free or not
     public static boolean isCellFree(char[] board, int index) {
         if (board[index] == ' ')
             return true;
         else
             return false;
     }
-//Making the move
-    public static void makeMove(char[] board, int index, char letter){
-        boolean cellfree=isCellFree(board,index);
-        if(cellfree)
-        {
-            board[index]=letter;
+
+    //Making the move
+    public static void makeMove(char[] board, int index, char letter) {
+        boolean cellFree = isCellFree(board, index);
+        if (cellFree) {
+            board[index] = letter;
         }
+    }
+
+    //Determine who starts first
+    public static Player whoStartsFirst() {
+        int toss = (int) Math.floor(Math.random() * 10 % 2);
+        return (toss == HEAD) ? Player.USER : Player.COMPUTER;
+
     }
 
     //MAIN
@@ -73,9 +85,10 @@ public class TicTacToeProblem {
         char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
         showBoard(board);
         int index = getUserMove(board);
-        makeMove(board,index,userletter);
+        makeMove(board, index, userletter);
         showBoard(board);
-        System.out.println(index);
+        Player p = whoStartsFirst();
+        System.out.println(p);
 
 
     }

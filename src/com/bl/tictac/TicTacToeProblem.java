@@ -7,9 +7,7 @@ public class TicTacToeProblem {
 
     public static Scanner userinput = new Scanner(System.in);
 
-    public enum Player {USER, COMPUTER}
-
-    ;
+    public enum Player {USER, COMPUTER};
     public static final int HEAD = 1;
 
     //Method to Create Board

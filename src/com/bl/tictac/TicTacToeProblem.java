@@ -18,8 +18,7 @@ public class TicTacToeProblem {
         for (int position = 1; position < board.length; position++) {
             board[position] = ' ';
         }
-        board[5] = 'X'; //Checking if computer blocks number 1 position
-        board[9] = 'X';
+
         return board;
     }
 
@@ -98,9 +97,21 @@ public class TicTacToeProblem {
         if (winMove != 0) return winMove;
         int userWinMove = getWinningMove(board, userletter);
         if (userWinMove != 0) return userWinMove;
+        int[] cornerMoves={1,3,7,9};
+        int cornerMove= getRandomMove(board,cornerMoves);
+        if(cornerMove!=0) return cornerMove;
         return 0;
     }
-
+//method of getting random move in case no one's winning
+    public static int getRandomMove(char[] board, int[] moves)
+    {
+        for(int index=1;index<board.length;index++)
+        {
+            if(isCellFree(board,moves[index]))
+                return moves[index];
+        }
+        return 0;
+    }
 
     public static int getWinningMove(char[] board, char letter) {
         for (int index = 1; index < board.length; index++) {

@@ -76,19 +76,56 @@ public class TicTacToeProblem {
 
     }
 
+    //Determine winning position
+    public static boolean isWinningPosition(char[] board, char letter) {
+        if ((board[1] == letter && board[2] == letter && board[3] == letter)
+                || (board[4] == letter && board[5] == letter && board[6] == letter)
+                || (board[7] == letter && board[8] == letter && board[9] == letter)
+                || (board[1] == letter && board[5] == letter && board[9] == letter)
+                || (board[3] == letter && board[5] == letter && board[7] == letter)
+                || (board[2] == letter && board[5] == letter && board[6] == letter)
+                || (board[1] == letter && board[4] == letter && board[7] == letter)
+                || (board[3] == letter && board[6] == letter && board[9] == letter))
+            return true;
+        else
+            return false;
+    }
+
     //MAIN
     public static void main(String[] args) {
+//        System.out.println("Enter letter: ");
+//        char letter = userinput.next().charAt(0);
+//        char[] board = createBoard();
+//        char userLetter = chooseLetter(letter);
+//        char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
+//        showBoard(board);
+//        int index = getUserMove(board);
+//        makeMove(board, index, userLetter);
+//        showBoard(board);
+//        Player p = whoStartsFirst();
+//        System.out.println(p);
+
+        Player p = whoStartsFirst();
         System.out.println("Enter letter: ");
         char letter = userinput.next().charAt(0);
+        char userLetter = chooseLetter(letter);
         char[] board = createBoard();
-        char userletter = chooseLetter(letter);
-        char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
-        showBoard(board);
-        int index = getUserMove(board);
-        makeMove(board, index, userletter);
-        showBoard(board);
-        Player p = whoStartsFirst();
-        System.out.println(p);
+
+        while (true) {
+            int index = getUserMove(board);
+            makeMove(board, index, userLetter);
+            showBoard(board);
+            p = (p == Player.USER) ? Player.COMPUTER : Player.USER;
+            String nameOfPlayer = (p == Player.USER) ? "User" : "Computer";
+            if (isWinningPosition(board, userLetter)) {
+                System.out.println(nameOfPlayer + " won");
+                return;
+            }
+            userLetter = (userLetter == 'X' ? 'O' : 'X');
+            System.out.println(nameOfPlayer + " is playing");
+
+
+        }
 
 
     }

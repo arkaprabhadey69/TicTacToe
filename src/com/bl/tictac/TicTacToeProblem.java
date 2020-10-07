@@ -18,7 +18,8 @@ public class TicTacToeProblem {
         for (int position = 1; position < board.length; position++) {
             board[position] = ' ';
         }
-
+        board[5] = 'X'; //Checking if computer blocks number 1 position
+        board[9] = 'X';
         return board;
     }
 
@@ -92,9 +93,11 @@ public class TicTacToeProblem {
     }
 
     //Method to get computer act like me i.e to play for a win
-    public static int getComputerMove(char[] board, char computerLetter) {
+    public static int getComputerMove(char[] board, char computerLetter, char userletter) {
         int winMove = getWinningMove(board, computerLetter);
         if (winMove != 0) return winMove;
+        int userWinMove = getWinningMove(board, userletter);
+        if (userWinMove != 0) return userWinMove;
         return 0;
     }
 
@@ -128,7 +131,7 @@ public class TicTacToeProblem {
         showBoard(board);
         Player p = whoStartsFirst();
         System.out.println(p);
-        int compMove = getComputerMove(board, computerletter);
+        int compMove = getComputerMove(board, computerletter, userLetter);
         makeMove(board, compMove, computerletter);
         showBoard(board);
 

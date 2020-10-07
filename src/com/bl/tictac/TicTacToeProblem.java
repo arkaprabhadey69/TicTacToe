@@ -6,16 +6,8 @@ import java.util.Scanner;
 public class TicTacToeProblem {
 
     public static Scanner userinput = new Scanner(System.in);
-
-    public enum Player {USER, COMPUTER}
-
-    ;
-
-    public enum GamePosition {WINNING, TIED, CONTINUE}
-
-    ;
-
-
+    public enum Player {USER, COMPUTER};
+    public enum GamePosition {WINNING, TIED, CONTINUE};
     public static final int HEAD = 1;
 
     //Method to Create Board
@@ -24,14 +16,12 @@ public class TicTacToeProblem {
         for (int position = 1; position < board.length; position++) {
             board[position] = ' ';
         }
-
         return board;
     }
 
 
     //Method to Choose Letter To Input
     public static char chooseLetter(char letter) {
-
         return Character.toUpperCase(letter);
     }
 
@@ -42,8 +32,6 @@ public class TicTacToeProblem {
         System.out.println(board[4] + "|" + board[5] + "|" + board[6]);
         System.out.println("*****");
         System.out.println(board[7] + "|" + board[8] + "|" + board[9]);
-
-
     }
 
     //Method to get user move
@@ -169,10 +157,9 @@ public class TicTacToeProblem {
     }
 
 
-    //MAIN
-    public static void main(String[] args) {
-
-        System.out.println("Enter letter: ");
+    //Method to play the tictactoe between user and computer
+    public static void PlayTicTacToeGame() {
+        System.out.println("Enter the letter of your choice: ");
         char letter = userinput.next().charAt(0);
         char userLetter = chooseLetter(letter);
         char computerLetter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
@@ -198,10 +185,29 @@ public class TicTacToeProblem {
             gameGoingOn = false;
 
         }
+    }
+
+    //MAIN
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner(System.in);
+        int wannaPlayMore = 1;
+        while (wannaPlayMore == 1) {
+            PlayTicTacToeGame();
+            System.out.println("Wanna play one more game?(yes or no)");
+            String ans = userInput.nextLine();
+            if (ans.equals("yes"))
+                wannaPlayMore = 1;
+            else
+                wannaPlayMore = 0;
+        }
 
 
     }
 
 
 }
+
+
+
+
 

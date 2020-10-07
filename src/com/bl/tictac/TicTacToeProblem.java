@@ -10,6 +10,12 @@ public class TicTacToeProblem {
     public enum Player {USER, COMPUTER}
 
     ;
+
+    public enum GamePosition {WINNING, TIED, CONTINUE}
+
+    ;
+
+
     public static final int HEAD = 1;
 
     //Method to Create Board
@@ -42,14 +48,14 @@ public class TicTacToeProblem {
 
     //Method to get user move
     public static int getUserMove(char[] board) {
-        ArrayList<Integer> availablecells = new ArrayList<>();
+        ArrayList<Integer> availableCells = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
-            availablecells.add(i);
+            availableCells.add(i);
         }
         while (true) {
             System.out.println("Enter your preferred index: ");
             int index = userinput.nextInt();
-            if (availablecells.contains(index) && isCellFree(board, index))
+            if (availableCells.contains(index) && isCellFree(board, index))
                 return index;
         }
     }
@@ -118,6 +124,7 @@ public class TicTacToeProblem {
         return 0;
     }
 
+    //Method of getting the winning Move
     public static int getWinningMove(char[] board, char letter) {
         for (int index = 1; index < board.length; index++) {
             char[] copyOfBoard = getCopyOfBoard(board);
@@ -129,27 +136,68 @@ public class TicTacToeProblem {
         return 0;
     }
 
+    //Method of getting copy of the board
     public static char[] getCopyOfBoard(char[] board) {
         char[] copyBoard = board.clone();
         return copyBoard;
     }
 
+    //Method to check game status
+    public static GamePosition getGameCondition(char[] board, int index, char letter, String msg) {
+        makeMove(board, index, letter);
+        if (isWinningPosition(board, letter)) {
+            showBoard(board);
+            System.out.println(msg);
+            return GamePosition.WINNING;
+        }
+        if (isBoardFull(board)) {
+            showBoard(board);
+            System.out.println("It's a tie");
+            return GamePosition.TIED;
+
+        }
+        return GamePosition.CONTINUE;
+    }
+
+    //Method to check for Tie
+    public static boolean isBoardFull(char[] board) {
+        for (int index = 1; index < board.length; index++) {
+            if (isCellFree(board, index))
+                return false;
+        }
+        return true;
+    }
+
+
     //MAIN
     public static void main(String[] args) {
+
         System.out.println("Enter letter: ");
         char letter = userinput.next().charAt(0);
-        char[] board = createBoard();
         char userLetter = chooseLetter(letter);
-        char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
-        showBoard(board);
-        int index = getUserMove(board);
-        makeMove(board, index, userLetter);
-        showBoard(board);
-        Player p = whoStartsFirst();
-        System.out.println(p);
-        int compMove = getComputerMove(board, computerletter, userLetter);
-        makeMove(board, compMove, computerletter);
-        showBoard(board);
+        char computerLetter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
+        char[] board = createBoard();
+        Player player = whoStartsFirst();
+        System.out.println(player);
+        boolean gameGoingOn = true;
+        GamePosition gameStatus;
+        while (gameGoingOn) {
+            if (player == Player.USER) {
+                showBoard(board);
+                int userMove = getUserMove(board);
+                String winningMessage = "Congrats!You Won!";
+                gameStatus = getGameCondition(board, userMove, userLetter, winningMessage);
+                player = Player.COMPUTER;
+            } else {
+                String winningMessage = "OOps!You lost to the computer!";
+                int computerMove = getComputerMove(board, computerLetter, userLetter);
+                gameStatus = getGameCondition(board, computerMove, computerLetter, winningMessage);
+                player = Player.USER;
+            }
+            if (gameStatus == GamePosition.CONTINUE) continue;
+            gameGoingOn = false;
+
+        }
 
 
     }

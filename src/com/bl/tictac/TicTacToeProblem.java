@@ -7,7 +7,9 @@ public class TicTacToeProblem {
 
     public static Scanner userinput = new Scanner(System.in);
 
-    public enum Player {USER, COMPUTER};
+    public enum Player {USER, COMPUTER}
+
+    ;
     public static final int HEAD = 1;
 
     //Method to Create Board
@@ -89,42 +91,50 @@ public class TicTacToeProblem {
             return false;
     }
 
+    //Method to get computer act like me i.e to play for a win
+    public static int getComputerMove(char[] board, char computerLetter) {
+        int winMove = getWinningMove(board, computerLetter);
+        if (winMove != 0) return winMove;
+        return 0;
+    }
+
+
+    public static int getWinningMove(char[] board, char letter) {
+        for (int index = 1; index < board.length; index++) {
+            char[] copyOfBoard = getCopyOfBoard(board);
+            if (isCellFree(copyOfBoard, index))
+                makeMove(copyOfBoard, index, letter);
+            if (isWinningPosition(copyOfBoard, letter))
+                return index;
+        }
+        return 0;
+    }
+
+    public static char[] getCopyOfBoard(char[] board) {
+        char[] copyBoard = board.clone();
+        return copyBoard;
+    }
+
     //MAIN
     public static void main(String[] args) {
-//        System.out.println("Enter letter: ");
-//        char letter = userinput.next().charAt(0);
-//        char[] board = createBoard();
-//        char userLetter = chooseLetter(letter);
-//        char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
-//        showBoard(board);
-//        int index = getUserMove(board);
-//        makeMove(board, index, userLetter);
-//        showBoard(board);
-//        Player p = whoStartsFirst();
-//        System.out.println(p);
-
-        Player p = whoStartsFirst();
         System.out.println("Enter letter: ");
         char letter = userinput.next().charAt(0);
-        char userLetter = chooseLetter(letter);
         char[] board = createBoard();
-
-        while (true) {
-            int index = getUserMove(board);
-            makeMove(board, index, userLetter);
-            showBoard(board);
-            p = (p == Player.USER) ? Player.COMPUTER : Player.USER;
-            String nameOfPlayer = (p == Player.USER) ? "User" : "Computer";
-            if (isWinningPosition(board, userLetter)) {
-                System.out.println(nameOfPlayer + " won");
-                return;
-            }
-            userLetter = (userLetter == 'X' ? 'O' : 'X');
-            System.out.println(nameOfPlayer + " is playing");
-
-
-        }
+        char userLetter = chooseLetter(letter);
+        char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
+        showBoard(board);
+        int index = getUserMove(board);
+        makeMove(board, index, userLetter);
+        showBoard(board);
+        Player p = whoStartsFirst();
+        System.out.println(p);
+        int compMove = getComputerMove(board, computerletter);
+        makeMove(board, compMove, computerletter);
+        showBoard(board);
 
 
     }
+
+
 }
+

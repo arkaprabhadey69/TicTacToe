@@ -49,12 +49,20 @@ public class TicTacToeProblem {
     }
 
 //    //Method to check whether cell is free or not
-//    public static boolean isCellFree(char[] board, int index) {
-//        if (board[index] == ' ')
-//            return true;
-//        else
-//            return false;
-//    }
+    public static boolean isCellFree(char[] board, int index) {
+        if (board[index] == ' ')
+            return true;
+        else
+            return false;
+    }
+
+    public static void makeMove(char[] board, int index, char letter){
+        boolean cellfree=isCellFree(board,index);
+        if(cellfree)
+        {
+            board[index]=letter;
+        }
+    }
 
     //MAIN
     public static void main(String[] args) {
@@ -65,6 +73,8 @@ public class TicTacToeProblem {
         char computerletter = (chooseLetter(letter) == 'X' ? 'O' : 'X');
         showBoard(board);
         int index = getUserMove(board);
+        makeMove(board,index,userletter);
+        showBoard(board);
         System.out.println(index);
 
 

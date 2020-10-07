@@ -55,7 +55,7 @@ public class TicTacToeProblem {
         else
             return false;
     }
-
+//Making the move
     public static void makeMove(char[] board, int index, char letter){
         boolean cellfree=isCellFree(board,index);
         if(cellfree)
